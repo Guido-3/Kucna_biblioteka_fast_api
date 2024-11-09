@@ -46,7 +46,7 @@ def get_autora_knjige(knjiga_id: int, db: Session = Depends(get_db)):
     return knjiga_crud.get_autora_knjige(db=db, knjiga_id=knjiga_id)
 
 @router.put("/knjige/{knjiga_id}", response_model=schemas.Knjiga)
-def update_knjiga(knjiga_id: int, knjiga: schemas.Knjiga, db: Session = Depends(get_db)):
+def update_knjiga(knjiga_id: int, knjiga: schemas.KnjigaUpdate, db: Session = Depends(get_db)):
     updated_knjiga = knjiga_crud.update_knjiga(db=db, knjiga_id=knjiga_id, knjiga=knjiga)
 
     if updated_knjiga is None:

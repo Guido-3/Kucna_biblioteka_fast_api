@@ -68,3 +68,29 @@ class Clan(ClanBase):
 
     class Config:
         from_attributes=True
+
+#################################### Scheme za Knjiga Zanr #######################################
+
+class KnjigaZanrBase(BaseModel):
+    knjiga_id: int
+    zanr_id: int
+
+class KnjigaZanrCreate(KnjigaZanrBase):
+    pass
+
+class KnjigaZanr(KnjigaZanrBase):
+    class Config:
+        from_attributes = True
+
+#################################### Scheme za Knjiga Zanr #######################################
+
+class CitanjeKnjigeBase(BaseModel):
+    knjiga_id: int
+    clan_id: int
+
+class CitanjeKnjigeCreate(CitanjeKnjigeBase):
+    pass
+
+class CitanjeKnjige(CitanjeKnjigeBase):
+    class Config:
+        from_attributes = True

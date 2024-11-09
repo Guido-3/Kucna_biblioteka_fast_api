@@ -1,21 +1,19 @@
 # SQLITE STUDIO APK ZA PROVJERU SQLITE 
 
-from sqlalchemy import Column, Integer, String, ForeignKey, Table, MetaData #mapped_column treba umjesto column, column se koristi u sqlalchemy 1.4, dok se mapped koristi u sqlachemy 2.0 
+from sqlalchemy import Column, Integer, String, ForeignKey, Table, MetaData 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .database import Base
 
-metadata_obj = MetaData()
-
 knjiga_zanr = Table(
     "knjiga_zanr",
-    metadata_obj,
-    Column("knjiga_id", Integer, ForeignKey("knjige.id"), primary_key=True), # NE MORAS STAVLJAT TIP PODATAKA, U OVOM SLUCAJU INTEGER
+    Base.metadata,
+    Column("knjiga_id", Integer, ForeignKey("knjige.id"), primary_key=True),
     Column("zanr_id", Integer, ForeignKey("zanrovi.id"), primary_key=True)
 )
 
 citanje_knjige = Table(
     "citanje_knjige",
-    metadata_obj, 
+    Base.metadata, 
     Column("knjiga_id", Integer, ForeignKey("knjige.id"), primary_key=True),
     Column("clan_id", Integer, ForeignKey("clanovi.id"), primary_key=True)
 )

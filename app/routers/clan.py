@@ -7,7 +7,7 @@ from app.database import get_db
 router = APIRouter()
 
 @router.post("/clanovi/", response_model=schemas.Clan)
-def create_clan(clan: schemas.Clan, db: Session = Depends(get_db)):
+def create_clan(clan: schemas.ClanCreate, db: Session = Depends(get_db)):
     return clan_crud.create_clan(db=db, clan=clan)
 
 @router.get("/clanovi/{clan_id}", response_model=schemas.Clan)
@@ -18,7 +18,7 @@ def get_clan(clan_id: int, db: Session = Depends(get_db)):
 
     return clan
 
-@router.get("/clanovi/", response_class=list[schemas.Clan])
+@router.get("/clanovi/", response_model=list[schemas.Clan])
 def get_clanovi(skip: int = 0, limit: int = None, db: Session = Depends(get_db)):
     return clan_crud.get_clanovi(db=db, skip=skip, limit=limit)
 
@@ -41,7 +41,7 @@ def get_knjige_koje_je_procitao_clan(clan_id: int, db: Session = Depends(get_db)
     return clan_crud.get_knjige_koje_je_procitao_clan(db=db, clan_id=clan_id)
 
 @router.put("/clanovi/{clan_id}", response_model=schemas.Clan)
-def update_clan(clan_id: int, clan: schemas.Clan, db: Session = Depends(get_db)):
+def update_clan(clan_id: int, clan: schemas.ClanUpdate, db: Session = Depends(get_db)):
     updated_clan = clan_crud.update_clan(db=db, clan_id=clan_id, clan=clan)
 
     if updated_clan is None:

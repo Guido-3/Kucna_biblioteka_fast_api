@@ -2,6 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 from app import models, schemas
 
+
 def create_zanr(db: Session, zanr: schemas.ZanrCreate):
     db_zanr = models.Zanr(
         ime = zanr.ime
@@ -11,7 +12,7 @@ def create_zanr(db: Session, zanr: schemas.ZanrCreate):
     db.commit()
     db.refresh(db_zanr)
 
-    return zanr
+    return db_zanr
 
 def get_zanr(db: Session, zanr_id: int):
     result = db.execute(select(models.Zanr).where(models.Zanr.id == zanr_id))

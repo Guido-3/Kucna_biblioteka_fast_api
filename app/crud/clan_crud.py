@@ -3,6 +3,10 @@ from sqlalchemy.orm import Session
 from app import models, schemas
 
 def create_clan(db: Session, clan: schemas.ClanCreate):
+    zanr_exists = db.execute(select(models.Zanr).where(models.Zanr.id == clan.omiljeni_zanr_id)).scalar_one_or_none()
+    if clan.omiljeni_zanr_id and zanr_exists is None:
+        return None
+    
     db_clan = models.ClanPorodice(
         ime = clan.ime,
         omiljeni_zanr_id = clan.omiljeni_zanr_id
@@ -52,6 +56,10 @@ def update_clan(db: Session, clan_id: int, clan: schemas.ClanUpdate):
         return None
     
     db_clan.ime = clan.ime
+    zanr_exists = db.execute(select(models.Zanr).where(models.Zanr.id == clan.omiljeni_zanr_id)).scalar_one_or_none()
+    if clan.omiljeni_zanr_id and zanr_exists is None:
+        return None
+    
     db_clan.omiljeni_zanr_id = clan.omiljeni_zanr_id
 
     db.commit()

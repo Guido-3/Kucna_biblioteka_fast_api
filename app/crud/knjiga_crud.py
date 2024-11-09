@@ -3,6 +3,10 @@ from sqlalchemy.orm import Session
 from app import models, schemas
 
 def create_knjiga(db: Session, knjiga: schemas.KnjigaCreate):
+    autor_exists = db.execute(select(models.Autor).where(models.Autor.id == knjiga.autor_id)).scalar_one_or_none()
+    if knjiga.autor_id and autor_exists is None:
+        return None
+
     db_knjiga = models.Knjiga(
         naslov = knjiga.naslov,
         autor_id = knjiga.autor_id
@@ -57,6 +61,10 @@ def update_knjiga(db: Session, knjiga_id: int, knjiga: schemas.KnjigaUpdate):
     if db_knjiga is None:
         return None
     
+    autor_exists = db.execute(select(models.Autor).where(models.Autor.id == knjiga.autor_id)).scalar_one_or_none()
+    if knjiga.autor_id and autor_exists is None:
+        return None
+
     db_knjiga.naslov = knjiga.naslov
     db_knjiga.autor_id = knjiga.autor_id
     
